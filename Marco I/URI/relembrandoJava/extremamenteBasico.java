@@ -1,4 +1,4 @@
-package ex1_8;
+package relembrandoJava;
 
 import java.io.IOException;
 import java.util.Scanner;
