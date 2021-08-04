@@ -2,53 +2,50 @@ package listasFilasPilhas;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class amigosDoHabay {
     public static void main(String[] args) throws IOException {
         Scanner in = new Scanner(System.in);
-        String insc;
-        String maior = "";
-        String nomeop[] = new String[2];
-        ArrayList<String> singupsYes = new ArrayList<>();
-        ArrayList<String> singupsNo = new ArrayList<>();
+        ArrayList<String> yesList = new ArrayList<>();
+        ArrayList<String> noList = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
+        String entry[] = new String[2];
+        String habayFriend = "";
 
-        do {
-            insc = in.nextLine();
-            nomeop = insc.split(" ");
+        entry = in.nextLine().split(" ");
 
-            if (nomeop[1].equalsIgnoreCase("YES")) {
-                for(String str : singupsYes){
-                    if (!nomeop[0].equalsIgnoreCase(str)){
-                        singupsYes.add(nomeop[0]);
-                        if (nomeop[0].length() > maior.length()) {
-                            maior = nomeop[0];
-                        }
-                    }
-                }
-            }else{
-                for(String str : singupsNo){
-                    if (!nomeop[0].equalsIgnoreCase(str)){
-                        singupsNo.add(nomeop[0]);
-                    }
-                }
-            }
+        do{
+            if (entry[1].equalsIgnoreCase("YES"))
+                yesList.add(entry[0]);
+            else
+                noList.add(entry[0]);
+            entry = in.nextLine().split(" ");
+        }while(!entry[0].equalsIgnoreCase("FIM"));
 
-        } while (!insc.equalsIgnoreCase("FIM"));
-
-        Collections.sort(singupsYes);
-        Collections.sort(singupsNo);
-
-        for (String str : singupsYes) {
-            System.out.println(str);
-        }
-
-        for (String str : singupsNo) {
-            System.out.println(str);
+        for(String name : yesList){
+            if (name.length() > habayFriend.length())
+                habayFriend = name;
         }
         
-        System.out.println("\nAmigo do Habey:\n" + maior);
+        yesList.sort(String.CASE_INSENSITIVE_ORDER);
+        for(String name : yesList){
+            if (!list.contains(name))
+                list.add(name);
+        }
+
+        noList.sort(String.CASE_INSENSITIVE_ORDER);
+        for(String name : noList){
+            if (!list.contains(name))
+                list.add(name);
+        }
+
+        for(String name : list){
+            System.out.println(name);
+        }
+
+        System.out.println("\nAmigo do Habay:");
+        System.out.println(habayFriend);
 
         in.close();
     }

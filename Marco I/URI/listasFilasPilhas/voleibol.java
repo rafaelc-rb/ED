@@ -9,13 +9,12 @@ public class voleibol {
         int players;
         int trys[] = new int[3];
         int strys[] = new int[3];
-        String name;
 
         players = in.nextInt();
         in.nextLine();
 
         for(int i = 0; i < players; i++){
-            name = in.nextLine();
+            in.nextLine();
             
             String trysStr[] = in.nextLine().split(" ");
             trys[0] += Integer.parseInt(trysStr[0]);
