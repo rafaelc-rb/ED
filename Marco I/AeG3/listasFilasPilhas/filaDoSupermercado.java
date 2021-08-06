@@ -1,5 +1,21 @@
 package listasFilasPilhas;
 
+/** 
+ * Realizado com muito suor, persistência e paint
+ * co-autor: @willraoli (github)
+ * 
+ * Agredecimentos: 
+ * Agradeço a microsoft por criar o incrível paint
+ * que nos ajudou nessa jornada e também aos criadores
+ * do discord que também foi essencial, agradeço também a
+ * minha mãe que sempre me apoia, e a todo pessoal de casa
+ * que sempre me sustentou e me apoia, e também a todos os
+ * autores de animes e seus materiais originais que sempre
+ * me livram do estresse. Agradeço também, especialmente, a 
+ * professora Alice Finger que lecionou Lógica Matemática
+ * que foi a base de todo o código produzido.
+*/
+
 import java.util.*;
 
 public class filaDoSupermercado {
