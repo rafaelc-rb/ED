@@ -1,64 +1,55 @@
 package listasFilasPilhas;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.io.IOException;
+import java.util.*;
 
 public class filaDoSupermercado {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        int numeroDeFuncionarios = in.nextInt(); //N
-        int numeroDeClientes = in.nextInt(); //M
-        int cont = 1;
+        int qtdFunc = in.nextInt();
+        int qtdCli = in.nextInt();
+        int tempoDoFuncionario = 0;
 
-        ArrayList<Integer> tempoFuncionarios = new ArrayList<>();
-        Queue<Integer> numeroDeCompras = new LinkedList<>();
-        ArrayList<Integer> funcionario = new ArrayList<>();
+        Queue<Integer> filaClientes = new LinkedList<Integer>();
+        ArrayList<Integer> tempoFunc = new ArrayList<>();
+        ArrayList<Integer> funcionariosTrabalhando = new ArrayList<>();       
 
-
-        for (int i=0; i<numeroDeFuncionarios; i++) {
-            int tempoParaEmpacotar = in.nextInt();
-
-            tempoFuncionarios.add(tempoParaEmpacotar);
-            cont = cont++;
-            funcionario.add(cont);
+        for (int i=0; i<qtdFunc; i++) {
+            tempoDoFuncionario = in.nextInt();
+            tempoFunc.add(i, tempoDoFuncionario);
         }
 
-        for (int i=0; i<numeroDeClientes; i++) {
-            int comprasNaCesta = in.nextInt();
-
-            numeroDeCompras.add(comprasNaCesta);
+        for (int i=0; i<qtdCli; i++) { //adicionar clientes na fila
+            filaClientes.offer(in.nextInt());
         }
 
-        int tempo = 0;
-        int tMax = Collections.max(tempoFuncionarios);
-        int tMin = Collections.min(tempoFuncionarios);
-
-        for (int i=0; i<numeroDeClientes; i++) {
-            if (numeroDeFuncionarios >= numeroDeClientes) {
-                tempo += numeroDeCompras.element() * tempoFuncionarios.get(i);
-                numeroDeCompras.poll();
-                funcionario.set(i, 0);
-            } else {
-                tempo += numeroDeCompras.element() * tMax;
-                numeroDeCompras.poll();
-                funcionario.set(i, 0);
-
-                if(funcionario.containsAll(0)){
-                    for(int j = 0; i < numeroDeCompras.size(); j++){
-                        
-                    }
-                }
-                
+        if(qtdCli >= qtdFunc){
+            for (int i=0; i<qtdFunc; i++) {
+                funcionariosTrabalhando.add(tempoFunc.get(i) * filaClientes.poll());
+            }
+        }else{
+            for (int i=0; i<qtdCli; i++) {
+                funcionariosTrabalhando.add(tempoFunc.get(i) * filaClientes.poll());
             }
         }
 
-        System.out.println(tempo/numeroDeFuncionarios);
+        //tempo para atender todos os clientes
+        int tempo = Collections.min(funcionariosTrabalhando);
+
+        int subtrair = tempo;
+        funcionariosTrabalhando.replaceAll(numero -> numero - subtrair);
         
+        while (!filaClientes.isEmpty()) {
+            int multiplicador = tempoFunc.get(funcionariosTrabalhando.indexOf(0));
+            int multiplicacao = multiplicador * filaClientes.poll();
+            funcionariosTrabalhando.set(funcionariosTrabalhando.indexOf(0), multiplicacao); //coloca os funcionários para empacotar
+            tempo += Collections.min(funcionariosTrabalhando); //adiciona o menor tempo
+            int s = Collections.min(funcionariosTrabalhando);
+            funcionariosTrabalhando.replaceAll(numero -> numero - s); //subtrai o menor tempo dos funcionáriosTrabalhando
+        }
+        tempo += Collections.max(funcionariosTrabalhando);
+
+        System.out.println(tempo);
         in.close();
     }
 }
